@@ -1,9 +1,7 @@
 <h1>This is the index page</h1>
 <p>All posts gonna be shown here</p>
 
-<% if flash[:error]%>
-<%= flash[:error]%>
-<% end%>
+
 
 <% @posts.each do |post| %>
 <p> <%= link_to(post.title, post_path(post.id)) %><br>
