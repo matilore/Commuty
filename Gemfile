@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'bootstrap-sass'
+
 gem 'devise'
 gem 'pry'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

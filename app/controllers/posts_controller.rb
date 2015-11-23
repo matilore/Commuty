@@ -1,51 +1,66 @@
 class PostsController < ApplicationController
-		def index
-		@posts = Post.all.order('created_at DESC')
+	before_action :authenticate_user!, except: [:index, :show]
+
+	def index
+		user_id = params[:user_id]
+		@user = User.find_by(id: user_id)		
+		@posts = Post.where(user_id: user_id).order('created_at DESC')
 	end
 
 	def show
+		@user = User.find_by(id: params[:user_id])
 		post_id = params[:id]
-		@post = Post.find_by(id: post_id)
+		@post = @user.posts.find_by(id: post_id)
 		
 	end
 
 	def new
+		@user = User.find(params[:user_id])
 		@post = Post.new
 		
 	end
 
 	def create
-		@post = Post.new(post_params)
+		@user = User.find_by(id: params[:user_id])
+		@post = @user.posts.new(post_params)
 		if @post.save
-			redirect_to posts_path
+			redirect_to user_posts_path(@user.id)
 		else
 			flash[:error] = "The post could not be added"
-			redirect_to new_post_path
+			redirect_to new_user_post_path
 		end
 	end
 
 	def edit
-		post_id = params[:id]
-		@post = Post.find_by(id: post_id)
+
+			@user = User.find_by(id: params[:user_id])
+			post_id = params[:id]
+			@post = @user.posts.find_by(id: post_id)
 		
 	end
 
 	def update
-		post_id = params[:id]
-		@post = Post.find_by(id: post_id)
-		if @post.update(post_params)
-			redirect_to post_path(@post.id)
+		@user = User.find_by(id: params[:user_id])
+		if current_user == @user.id
+			@post = @user.posts.find_by(id: params[:id])
+			if @post.update(post_params)
+				redirect_to user_post_path(@user.id, @post.id)
+			else
+				flash[:error] = "The post could not be updated"
+				redirect_to edit_post_path
+			end
 		else
-			flash[:error] = "The post could not be updated"
-			redirect_to edit_post_path
-		end		
+			@post = @user.posts.find_by(id: params[:id])
+			flash[:notice] = "Your are not allowed to edit this post"
+			redirect_to edit_user_post_path(@post.user_id, @post.id)
+		end
 	end
 
 	def destroy
-		post_id = params[:id]
-		@post = Post.find_by(post_id)
+		@user = User.find_by(id: params[:user_id])
+		@post = @user.posts.find_by(id: params[:id])
 		@post.destroy
-		redirect_to posts_path
+		redirect_to user_posts_path(@user.id)
 	end
 
 

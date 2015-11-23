@@ -1,4 +1,4 @@
-<%=form_for @post do |f|%>
+<%=form_for [@user, @post] do |f|%>
 <p>
 <%=f.label "Title"%><br>
 <%=f.text_field :title%>
