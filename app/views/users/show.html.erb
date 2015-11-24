@@ -1,2 +1,26 @@
-<p><%=@user.email%></p>
-<button><%= link_to("click here to see all the user's posts", user_posts_path(@user.id) )%></button>
+<h1>Hi <%=@user.username%>!</h1>
+<button class="btn btn-default"><%= link_to("Click here to see your posts", user_posts_path(@user.id) )%></button>
+
+<br>
+<br>
+<br>
+<br>
+
+<% if @user_requests%>
+	<%@user_requests.each do |request|%>
+	<p style="display:inline">You have one request from <strong><%= User.show_username_by_request(request.author_id)%></strong></p>
+
+	
+	<%= form_for request, method: :patch do |f| %>
+		<%= f.hidden_field :id, :value => request.id %>
+		<%= f.submit "Accept", :class => 'btn btn-success' %>
+	<% end %>
+
+	<%= form_for request, method: :delete do |f| %>
+		<%= f.hidden_field :id, :value => request.id %>
+		<%= f.submit "Reject", :class => 'btn btn-danger' %>
+	<% end %>
+
+	 <br><br>
+	<% end %>
+<% end %>

@@ -11,6 +11,7 @@ class PostsController < ApplicationController
 		@user = User.find_by(id: params[:user_id])
 		post_id = params[:id]
 		@post = @user.posts.find_by(id: post_id)
+		@request = Request.new
 		
 	end
 
@@ -41,7 +42,7 @@ class PostsController < ApplicationController
 
 	def update
 		@user = User.find_by(id: params[:user_id])
-		if current_user == @user.id
+		if current_user.id == @user.id
 			@post = @user.posts.find_by(id: params[:id])
 			if @post.update(post_params)
 				redirect_to user_post_path(@user.id, @post.id)
@@ -58,9 +59,15 @@ class PostsController < ApplicationController
 
 	def destroy
 		@user = User.find_by(id: params[:user_id])
-		@post = @user.posts.find_by(id: params[:id])
-		@post.destroy
-		redirect_to user_posts_path(@user.id)
+		if current_user.id == @user.id
+			@post = @user.posts.find_by(id: params[:id])
+			@post.destroy
+			redirect_to user_posts_path(@user.id)
+		else
+			@post = @user.posts.find_by(id: params[:id])
+			flash[:notice] = "Your are not allowed to delete this post"
+			redirect_to edit_user_post_path(@post.user_id, @post.id)
+		end
 	end
 
 
