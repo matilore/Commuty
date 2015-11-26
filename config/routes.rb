@@ -3,7 +3,9 @@ Rails.application.routes.draw do
     resources :users do
     	resources :posts
 	end
-	resources :requests
+	resources :requests do
+		resources :revisions
+	end
 
 	get '/home' => "posts#home"
 	get "/" => "sites#index"

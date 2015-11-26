@@ -1,26 +1,46 @@
+<div class="row">
+<div class="col-md-8">
 <h1>Hi <%=@user.username%>!</h1>
-<button class="btn btn-default"><%= link_to("Click here to see your posts", user_posts_path(@user.id) )%></button>
+<div class="buttons-white-font">
+	<button class="btn btn-primary"><%= link_to("Click here to see your posts", user_posts_path(@user.id) )%></button>
+</div>
+</div>
+
+<div class="col-md-4">
+
+<% if !@user_requests.empty?%>
+<div class="alert alert-danger col-md-10" role="alert"><strong>The number of pending requests is <%= Request.show_number_pending_requests(@user.id)%></strong></div>
 
 <br>
 <br>
 <br>
 <br>
 
-<% if @user_requests%>
-	<%@user_requests.each do |request|%>
-	<p style="display:inline">You have one request from <strong><%= User.show_username_by_request(request.author_id)%></strong></p>
 
+	<%@user_requests.each do |request| %>
+
+		<% if request.status_request == false %>
+			<p style="display:inline">Request from <strong><%= User.show_username_by_request(request.editor_id)%></strong></p>
+			
+
+			<%= form_for request, method: :patch do |f| %>
+				<%= f.hidden_field :id, :value => request.id %>
+				<%= f.submit "Accept", :class => 'btn btn-success pull-left col-md-5' %>
+			<% end %>
+			
+			<%= form_for request, method: :delete do |f| %>
+				<%= f.hidden_field :id, :value => request.id %>
+				<%= f.submit "Reject", :class => 'btn btn-danger pull-left col-md-5' %>
+			<% end %>
+			<br>
+			<br>
+			<% end %>
+		<% end %>
 	
-	<%= form_for request, method: :patch do |f| %>
-		<%= f.hidden_field :id, :value => request.id %>
-		<%= f.submit "Accept", :class => 'btn btn-success' %>
-	<% end %>
-
-	<%= form_for request, method: :delete do |f| %>
-		<%= f.hidden_field :id, :value => request.id %>
-		<%= f.submit "Reject", :class => 'btn btn-danger' %>
-	<% end %>
-
-	 <br><br>
-	<% end %>
+<% else %>
+	<div class="alert alert-success col-md-10" role="alert"><strong>You have no requests</strong></div>
+	
 <% end %>
+
+</div>
+</div>
