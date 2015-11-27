@@ -12,10 +12,23 @@ class PostsController < ApplicationController
 		post_id = params[:id]
 		@post = @user.posts.find_by(id: post_id)
 		@request = Request.new
+
+
 		if current_user
-			@request_accepted = find_match_request_editor(post_id, current_user)
+			@if_request_accepted = find_match_request_editor_accepted(post_id, current_user) 
+			#if request exists but status = false
+			find_match_request_editor_pending(post_id, current_user) ? @request_pending = true : @no_request_found = true
+
+			if @if_request_accepted
+				@request_accepted = show_accepted_request(post_id, current_user)
+			end
+
+			if if_revision_exist(@post)
+			#retrieve revisions if exists
+				@revisions = all_revisions_of_post(@post)
+			end
+
 		end
-		
 	end
 
 	def new
@@ -25,6 +38,7 @@ class PostsController < ApplicationController
 	end
 
 	def create
+
 		@user = User.find_by(id: params[:user_id])
 		@post = @user.posts.new(post_params)
 		if @post.save
@@ -44,12 +58,13 @@ class PostsController < ApplicationController
 	end
 
 	def update
+
 		post_id = params[:id]
 		
 		@user = User.find_by(id: params[:user_id])
 
 
-		if current_user.id == @user.id || find_match_request_editor(post_id, current_user)
+		if current_user.id == @user.id || find_match_request_editor_accepted(post_id, current_user)
 			@post = @user.posts.find_by(id: post_id)
 
 			if @post.update(post_params)
@@ -80,15 +95,45 @@ class PostsController < ApplicationController
 
 
 	private
+
 	def post_params
 		params.require(:post).permit(:title, :content)		
 	end
 
-	def find_match_request_editor(post_id, current_user)
+	def find_match_request_editor_accepted(post_id, current_user)
 		#this method lies in request model -> search for matches of accepted requests
 		if current_user
-			request_match = Request.editor_accepted?(post_id, current_user)
-			request_match.size > 0 ? true : false
+			request_accepted_match = Request.editor_accepted?(post_id, current_user)
+			request_accepted_match.size > 0 ? true : false
 		end
 	end
+
+	def find_match_request_editor_pending(post_id, current_user)
+		#this method lies in request model -> search for matches of accepted requests
+		if current_user
+			request_pending_match = Request.editor_pending?(post_id, current_user)
+			request_pending_match.size > 0 ? true : false
+		end
+	end
+
+	def show_accepted_request(post_id, current_user)
+		if current_user
+			request_accepted_match = Request.editor_accepted?(post_id, current_user)
+		end		
+	end
+
+	def if_revision_exist(post)
+		revision = Revision.revision_of_post(post)[0]
+		
+		if revision != nil
+			return true
+		else
+			return false
+		end
+	end
+
+	def all_revisions_of_post(post)
+		revision = Revision.revision_of_post(post)		
+	end
+
 end

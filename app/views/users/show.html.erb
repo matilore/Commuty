@@ -6,10 +6,16 @@
 </div>
 </div>
 
+<!--In the same div of posts button-->
+<div class="revisions">
+	
+
+</div>
+
 <div class="col-md-4">
 
-<% if !@user_requests.empty?%>
-<div class="alert alert-danger col-md-10" role="alert"><strong>The number of pending requests is <%= Request.show_number_pending_requests(@user.id)%></strong></div>
+<% if @number_pending_requests > 0 %>
+<div class="alert alert-danger col-md-10" role="alert"><strong>The number of pending requests is <%= @number_pending_requests%></strong></div>
 
 <br>
 <br>
@@ -21,6 +27,7 @@
 
 		<% if request.status_request == false %>
 			<p style="display:inline">Request from <strong><%= User.show_username_by_request(request.editor_id)%></strong></p>
+			<p> to edit <%= Post.find_by(id: request.post_id).title%></p>
 			
 
 			<%= form_for request, method: :patch do |f| %>
@@ -37,9 +44,10 @@
 			<% end %>
 		<% end %>
 	
-<% else %>
-	<div class="alert alert-success col-md-10" role="alert"><strong>You have no requests</strong></div>
-	
+<% end %>
+
+<% if @number_pending_requests == 0 %>
+<div class="alert alert-success col-md-10" role="alert"><strong>You have no requests</strong></div>
 <% end %>
 
 </div>

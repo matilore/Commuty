@@ -1,6 +1,10 @@
 class RequestsController < ApplicationController
 	before_action :authenticate_user!
 
+	def index
+		
+	end
+
 	def create
 		@request = Request.create(request_params)
 		redirect_to user_post_path(@request.author_id, @request.post_id)

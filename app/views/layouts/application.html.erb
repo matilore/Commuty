@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Commuty</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
+	<head>
+	  <title>Commuty</title>
+	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	  <%= csrf_meta_tags %>
+	</head>
 <body>
 
 	<nav class="navbar navbar-default">
@@ -43,11 +43,18 @@
 	<div class= "col-md-10 col-md-offset-1">
 
 		<div class="container">
-	
-	<p class="notice"><%= flash[:notice]%></p>
-	<p class="alert"><%= flash[:alert]%></p>
+		<div class="row">
+
+		<%if flash[:notice]%>
+		<div class="alert alert-success alert-dismissible" role="alert"><%= flash[:notice]%></div>
+		<% end %>
+
+		<%if flash[:alert]%>
+		<div class="alert alert-success alert-dismissible" role="alert"><%= flash[:alert]%></div>
+		<% end %>
 
 			<%= yield %>
+			</div>
 		</div>
 	</div>
 </div>
