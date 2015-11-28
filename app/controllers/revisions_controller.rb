@@ -10,8 +10,8 @@ class RevisionsController < ApplicationController
 		@revision = Revision.find_by(id: params[:id] )
 		#find_editor & find_author is set in User model
 		@user = User.find_editor_from_revision(@revision)
-		@post_of_revision = Post.find_by(id: @revision.post_id) 
-
+		@post_of_revision = Post.find_by(id: @revision.post_id)
+		#after each . add 2 \n to simulate new p
 		@diffy = Diffy::Diff.new(@post_of_revision.content, @revision.content).to_s(:html)
 		
 	end
@@ -61,5 +61,4 @@ class RevisionsController < ApplicationController
 		
 	end
 
-	
 end

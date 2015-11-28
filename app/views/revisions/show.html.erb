@@ -3,13 +3,12 @@
 	<%=link_to( "Original Post", user_post_path(@post_of_revision.user.id,@post_of_revision.id ) )%>
 	
 	
-	
 </div>
 </div>
 
 
 
-<div class="col-md-7">
+<div class="col-md-7" style="word-wrap: break-word; margin-bottom: 100px;">
 <h1><%= @revision.title%></h1>
 
 <p class="date"><%= time_ago_in_words(@revision.created_at)%> ago</p>
@@ -44,15 +43,18 @@
           <span>&times;</span>
         </button>
 
-        <h3 class="modal-title">
-          title
+        <h3 class="modal-title" style="margin-left:40px;">
+          <%=@post_of_revision.title%>
         </h3>
       </div><!-- .modal-header -->
 
-      <div class="modal-body">
+      <div class="modal-body" style="word-wrap: break-word;>
         <dl class="dl-horizontal">
 
-        <%=@diffy.html_safe%>
+
+
+        <%=	@diffy.html_safe%>
+
           
         </dl>
       </div><!-- .modal-body -->

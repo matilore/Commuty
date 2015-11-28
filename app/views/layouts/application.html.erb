@@ -3,7 +3,7 @@
 	<head>
 	  <title>Commuty</title>
 	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>	  
+	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 	  <%= csrf_meta_tags %>
 	</head>
 <body>
@@ -29,8 +29,9 @@
 	        <li><%= link_to("Sign up", new_user_registration_path)%></li>
 	        <li><%= link_to("Sign in", new_user_session_path)%></li>
 	      <% else %>
-	      <li><a href=<%= user_path(current_user.id)%>>My Profile</a></li>
-	      <li><a>Hi <strong><%= current_user.username%></strong>!</a></li>
+	      <li><a href=''>requests <span class="badge"><%=notifies_pending_request_to_answer.to_s%></span></a></li>
+	      <li><a href=''>revisions <span class="badge"><%=notifies_revisions_of_own_post.to_s%></span></a></li>	      
+	      <li><a href=<%= user_path(current_user.id)%>><strong><%= current_user.username%></strong></a></li>
 	        <li><%=link_to("Log out", destroy_user_session_path, :method => :delete)%></li>
 	        <li><%= link_to("Create a new post", new_user_post_path(current_user.id))%></li>
 	      <% end %>
@@ -44,13 +45,16 @@
 
 		<div class="container">
 		<div class="row">
-
 		<%if flash[:notice]%>
-		<div class="alert alert-success alert-dismissible" role="alert"><%= flash[:notice]%></div>
+			<div class="alert alert-success alert-dismissible" role="alert">
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><%= flash[:notice]%>
+			</div>
 		<% end %>
 
 		<%if flash[:alert]%>
-		<div class="alert alert-success alert-dismissible" role="alert"><%= flash[:alert]%></div>
+			<div class="alert alert-warning alert-dismissible" role="alert">
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><%= flash[:alert]%>
+			</div>
 		<% end %>
 
 			<%= yield %>

@@ -15,7 +15,6 @@
 //= require jquery_ujs
 //= require jquery.turbolinks
 //= require turbolinks
-//= tinymce.min.js
 //= require_tree .
 
 

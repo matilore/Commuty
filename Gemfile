@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gem 'bootstrap-sass'
 
+gem 'tinymce-rails'
+
 gem 'diffy'
 
 gem 'jquery-turbolinks'

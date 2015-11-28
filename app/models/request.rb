@@ -12,7 +12,6 @@ class Request < ActiveRecord::Base
 
 	def self.show_number_pending_requests(user_id)
 		where(author_id: user_id, status_request: false).size
-		
 	end
 
 	def self.show_number_accepted_requests(user_id)
