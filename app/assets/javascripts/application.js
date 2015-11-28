@@ -13,5 +13,14 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require jquery_ujs
+//= require jquery.turbolinks
 //= require turbolinks
+//= tinymce.min.js
 //= require_tree .
+
+
+$(document).ready(function(){
+	$('.diffs-btn').click(function() {
+		var modal = $('.diffs-modal').modal('show')
+	})
+});

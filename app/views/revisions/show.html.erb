@@ -1,8 +1,20 @@
+<div class="col-md-2">
+<div style="padding-top: 100px;">
+	<%=link_to( "Original Post", user_post_path(@post_of_revision.user.id,@post_of_revision.id ) )%>
+	
+	
+	
+</div>
+</div>
+
+
+
+<div class="col-md-7">
 <h1><%= @revision.title%></h1>
 
 <p class="date"><%= time_ago_in_words(@revision.created_at)%> ago</p>
 
-<p><%= @revision.content %></p>
+<p><%= simple_format(@revision.content) %></p>
 
 <% if current_user%>
 	<% if @user.id == current_user.id%>
@@ -16,4 +28,35 @@
 	<br>
 	</div>
 	<% end %>
+	
+	<button class="btn btn-warning col-md-5 diffs-btn">Check the diffs with the original post</button>
+	
 <% end %>
+</div>
+
+<!-- Pokemon modal view (hidden at first) -->
+<div class="modal fade diffs-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+
+        <h3 class="modal-title">
+          title
+        </h3>
+      </div><!-- .modal-header -->
+
+      <div class="modal-body">
+        <dl class="dl-horizontal">
+
+        <%=@diffy.html_safe%>
+          
+        </dl>
+      </div><!-- .modal-body -->
+
+    </div><!-- .modal-content -->
+  </div><!-- .modal-dialog -->
+</div><!-- .modal -->

@@ -42,3 +42,17 @@ body {
 	color: white;
 	text-decoration: none;
 }
+
+li.del {
+	color: red;
+	font-weight: bold;
+}
+
+li.ins {
+	color: green;
+	font-weight: bold;
+}
+
+.diff li {
+	list-style: none;
+}

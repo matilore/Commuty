@@ -1,14 +1,18 @@
+require 'diffy'
 class RevisionsController < ApplicationController
 	before_action :authenticate_user! , except: [:index]
 
+	def index
+		
+	end
+
 		def show
 		@revision = Revision.find_by(id: params[:id] )
-
 		#find_editor & find_author is set in User model
 		@user = User.find_editor_from_revision(@revision)
-		
+		@post_of_revision = Post.find_by(id: @revision.post_id) 
 
-		#@revisions_same_post = 
+		@diffy = Diffy::Diff.new(@post_of_revision.content, @revision.content).to_s(:html)
 		
 	end
 
