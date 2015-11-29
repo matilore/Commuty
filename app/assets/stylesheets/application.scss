@@ -56,3 +56,24 @@ li.ins {
 .diff li {
 	list-style: none;
 }
+
+div.content {
+	//background-color: #D2CDDC;
+}
+
+div.super {
+	background-color: #A0DBA3;
+	position:relative;
+}
+
+div.comment {
+	margin-left: 20px;
+	position:fixed;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.main-content p span {
+	margin-left: 20px;
+	color: #719272;
+}

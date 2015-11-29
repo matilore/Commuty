@@ -8,12 +8,12 @@
 
 
 
-<div class="col-md-7" style="word-wrap: break-word; margin-bottom: 100px;">
+<div class="col-md-8 content" style="word-wrap: break-word; margin-bottom: 100px;">
 <h1><%= @revision.title%></h1>
 
 <p class="date"><%= time_ago_in_words(@revision.created_at)%> ago</p>
 
-<p><%= simple_format(@revision.content) %></p>
+<div class="main-content"><%= simple_format(@revision.content) %></div>
 
 <% if current_user%>
 	<% if @user.id == current_user.id%>
@@ -33,6 +33,10 @@
 <% end %>
 </div>
 
+<div class="col-md-2 comments">
+	
+</div>
+
 <!-- Pokemon modal view (hidden at first) -->
 <div class="modal fade diffs-modal">
   <div class="modal-dialog">
@@ -48,7 +52,7 @@
         </h3>
       </div><!-- .modal-header -->
 
-      <div class="modal-body" style="word-wrap: break-word;>
+      <div class="modal-body" style="word-wrap: break-word";>
         <dl class="dl-horizontal">
 
 

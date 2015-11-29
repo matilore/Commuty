@@ -18,7 +18,7 @@
 
 				<div class="panel panel-success">
 					<div class="panel-heading">
-						<h3 class="panel-title"><%= link_to(post.title, user_post_path(post.user_id, post.id)) %></h3><%=show_req_rev_status(post.id, current_user)%>
+						<h3 class="panel-title"><%= link_to(post.title, user_post_path(post.user_id, post.id)) %></h3><%=show_req_rev_status(post.id, current_user) if current_user%>
 					</div>
 
 					<div class="panel-body">
