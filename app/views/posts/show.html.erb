@@ -105,6 +105,7 @@ CREATED !@if_request_accepted CONDITION TO FIX THAT-->
 			<%= form_for @comment, url: comments_path, html: { class:'form-group-comment hide'} do |f| %>
 			<%= f.hidden_field :user_id, :value => current_user.id %>
 			<%= f.hidden_field :post_id, :value => @post.id %>
+			<%= f.hidden_field :username, :value => current_user.username %>
 			<%= f.text_area :content, :cols => 25, :rows => 10%>
 			<%= f.submit 'Save comments', :class => "btn btn-success col-md-8" %>
 			<% end %>

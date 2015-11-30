@@ -106,7 +106,7 @@ function createParClass() {
 		var commentList = $('.comment ul');
 		for (var i = 0; i < data.length; i++) {
 			if (data[i].paragraph_id == pId) {
-				$($('<li>').addClass('list-group-item col-md-10 ' + pId).text(data[i].content)).appendTo(commentList);
+				$($('<li>').addClass('list-group-item col-md-10 ' + pId).text('written by ' + data[i].username + ' ' + data[i].content)).appendTo(commentList);
 			};
 		}
 	}
