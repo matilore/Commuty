@@ -17,13 +17,16 @@
 //= require turbolinks
 //= require_tree .
 
+var pId;
+
 
 function createParClass() {
 		var arrayParagraphs = $('.main-content p')
 		for (var i = 0; i < arrayParagraphs.length; i++) {
 			var idName = 'par'+ i;
 			$(arrayParagraphs[i]).attr('id', idName);
-			$(arrayParagraphs[i]).append("<span style='width:6px;'class='glyphicon glyphicon-pencil pull-right hide' aria-hidden='true'></span><span style='width:6px; 'class='glyphicon glyphicon-sunglasses pull-right hide' aria-hidden='true'></span>");
+			$(arrayParagraphs[i]).append("<span style='width:6px;'class='glyphicon glyphicon-pencil pull-right hide' aria-hidden='true'></span>");
+			$(arrayParagraphs[i]).append("<span style='width:6px; 'class='glyphicon glyphicon-sunglasses pull-right hide' aria-hidden='true'></span>");
 			//inserire qui un pulsante per aggiungere commento con identificatore tag
 
 		};
@@ -31,15 +34,14 @@ function createParClass() {
 
 	function showComments() {
 		$('.main-content p span.glyphicon-sunglasses').click(function(event){
-			var pId = $(event.target).parent().attr('id');
-			console.log(pId)
+			pId = $(event.target).parent().attr('id');
+			
 
-		if (!($(event.target).hasClass('commentShowing'))) {		
-			var comment = $('<p>This is a comment</p>').addClass(pId);
-			$('.comment').append(comment);
-			$(event.target).toggleClass('commentShowing')
+		if (!($(event.target).hasClass('commentShowing'))) {
+			retrieveComment();			
+			$(event.target).toggleClass('commentShowing');
 		} else {
-			$('.comment').children("." + pId).remove();
+			$('.comment ul').children("." + pId).remove();
 			$(event.target).toggleClass('commentShowing')
 			}
 		});
@@ -50,6 +52,13 @@ function createParClass() {
 			$('.form-group-comment').toggleClass('hide');
 
 			$(this).parent().toggleClass('highline');
+			var pId = $(this).parent().attr('id');
+			var hiddenField = $('<input>');
+			$('.form-group-comment').append(hiddenField);
+			console.log(hiddenField);
+			hiddenField.attr('type', 'hidden').attr('name', 'comment[paragraph_id]');
+			hiddenField.attr('value', pId);
+
 		})
 	}
 
@@ -79,6 +88,32 @@ function createParClass() {
 		});
 	}
 
+
+	function retrieveComment(){
+	var URL = 'http://localhost:3000/comments/' + post_id;
+
+		$.ajax({
+			url: URL,
+			dataType: 'json',
+			success: retrieveData,
+			error: handleError
+		});
+	}
+
+
+
+	function retrieveData(data) {
+		var commentList = $('.comment ul');
+		for (var i = 0; i < data.length; i++) {
+			if (data[i].paragraph_id == pId) {
+				$($('<li>').addClass('list-group-item col-md-10 ' + pId).text(data[i].content)).appendTo(commentList);
+			};
+		}
+	}
+
+	function handleError(req, status, error) {
+		console.log("there has been an  error " + error);
+	}
 
 $(document).ready(function(){
 	$('.diffs-btn').click(function() {

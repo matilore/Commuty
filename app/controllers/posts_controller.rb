@@ -12,6 +12,8 @@ class PostsController < ApplicationController
 		post_id = params[:id]
 		@post = @user.posts.find_by(id: post_id)
 		@request = Request.new
+		@comment = Comment.new
+
 
 
 		if current_user

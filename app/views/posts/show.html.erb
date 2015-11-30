@@ -1,3 +1,7 @@
+<script type="text/javascript">
+	var post_id = <%= raw @post.id %>;
+</script>
+
 <div class="col-md-2">
 <div style="padding-top: 100px;">
 	
@@ -93,10 +97,20 @@ CREATED !@if_request_accepted CONDITION TO FIX THAT-->
 		<div class="comment">
 
 
-			<form class="form-group-comment hide">
+			<!-- <form class="form-group-comment hide">
 			  <textarea style="height:150px;" class="form-control" id="comment"></textarea>
 			  <button  class="btn btn-success col-md-12" type="submit">Save Comment</button>
-			</form>
+			</form> -->
+
+			<%= form_for @comment, url: comments_path, html: { class:'form-group-comment hide'} do |f| %>
+			<%= f.hidden_field :user_id, :value => current_user.id %>
+			<%= f.hidden_field :post_id, :value => @post.id %>
+			<%= f.text_area :content, :cols => 25, :rows => 10%>
+			<%= f.submit 'Save comments', :class => "btn btn-success col-md-8" %>
+			<% end %>
+
+			<ul class="list-group">
+			</ul>
 			
 		</div>
 	</div>
