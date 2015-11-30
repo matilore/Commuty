@@ -27,8 +27,7 @@
 
 <div class="col-md-8 content" style="word-wrap: break-word; margin-bottom: 100px;">
 <h1><%= @post.title%></h1>
-
-<p class="date"><%= time_ago_in_words(@post.created_at)%> ago</p>
+<p class="date"><%= time_ago_in_words(@post.created_at)%> ago by <em><%= link_to(User.find(@post.user_id).username, user_posts_path(@post.user_id))%></em></p>
 
 
 
@@ -94,11 +93,10 @@ CREATED !@if_request_accepted CONDITION TO FIX THAT-->
 		<div class="comment">
 
 
-			<div class="form-group-comment hide">
-			  <label for="comment">Comment:</label>
-			  <textarea class="form-control" rows="5" id="comment"></textarea>
-			  <button type="submit"></button>
-			</div>
+			<form class="form-group-comment hide">
+			  <textarea style="height:150px;" class="form-control" id="comment"></textarea>
+			  <button  class="btn btn-success col-md-12" type="submit">Save Comment</button>
+			</form>
 			
 		</div>
 	</div>

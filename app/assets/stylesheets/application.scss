@@ -77,3 +77,14 @@ div.comment {
 	margin-left: 20px;
 	color: #719272;
 }
+
+@-webkit-keyframes pulse {
+  0% {background-color: #FFFFFF;}
+  100% {background-color: #7BEE7B;}
+}
+
+.main-content p.highline {
+	border-radius: 5px;
+	background-color: #FFFFFF;
+	-webkit-animation: pulse 5s infinite alternate;
+}

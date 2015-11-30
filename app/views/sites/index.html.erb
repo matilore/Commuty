@@ -24,6 +24,7 @@
 					<div class="panel-body">
 						<p>written by <%= link_to(User.find_by(id: post.user_id).username, user_posts_path(post.user_id))%></p>
 						<p> created at <%= post.created_at.strftime('%d %B %Y') %></p>
+						<p><%=show_text_preview(post.content)%></p>
 					</div>
 				</div>
 			<% end %>

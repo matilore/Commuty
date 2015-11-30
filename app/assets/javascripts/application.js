@@ -48,6 +48,8 @@ function createParClass() {
 	function writeComments() {
 		$('.main-content p span.glyphicon-pencil').click(function(){
 			$('.form-group-comment').toggleClass('hide');
+
+			$(this).parent().toggleClass('highline');
 		})
 	}
 

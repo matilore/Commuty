@@ -8,6 +8,8 @@ gem 'diffy'
 
 gem 'jquery-turbolinks'
 
+gem 'faker'
+
 gem 'devise'
 gem 'pry'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

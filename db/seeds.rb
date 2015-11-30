@@ -5,9 +5,20 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-
+puts 'launching seeds'
 
 
 Request.destroy_all
 Revision.destroy_all
+Post.destroy_all
 
+puts 'Posts, Requests and Revisions destroyed'
+
+puts 'populating seeds'
+
+
+User.all.each do |user|
+	10.times do |i|
+		user.posts.create(title: Faker::Lorem.word, content: Faker::Lorem.paragraph)
+	end
+end

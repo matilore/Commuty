@@ -12,8 +12,15 @@
 			    <h3 class="panel-title"><%= link_to(post.title, user_post_path(@user.id, post.id)) %></h3>
 			  </div>
 			  <div class="panel-body">
-				<p><%= post.created_at.strftime('%d %B %Y') %></p>  </div>
+				<p><%= post.created_at.strftime('%d %B %Y') %></p> 
+					<div class="preview">
+					<%#inserire previre testo%>
+					<%= show_text_preview(post.content)%>
+				 	</div>
 			</div>
+			</div>
+
+
 
 		<% end %>
 	</div>
