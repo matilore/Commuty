@@ -37,19 +37,24 @@ class PostsController < ApplicationController
 
 		@user = User.find(params[:user_id])
 		@post = Post.new
+		@categories = Category.all
 		
 	end
 
 	def create
 
-		@user = User.find_by(id: params[:user_id])
-		@post = @user.posts.new(post_params)
+		obj = JSON.parse(params[:data_value])
+
+		categories = obj['categories']
+		categories_obj = categories.map {|category| Category.find_by(name: category)}
+		title = obj['post']['title']
+		content = obj['post']['content']
+		
+		@user = User.find_by(id: obj['post']['user_id'])
+		@post = @user.posts.new(title: title, content: content)
 		if @post.save
-			redirect_to user_posts_path(@user.id)
-		else
-			flash[:error] = "The post could not be added"
-			redirect_to new_user_post_path
-		end
+			categories_obj.each {|category| CategoriesPost.new(category_id: category.id, post_id: @post.id ).save}
+		end		
 	end
 
 	def edit
@@ -57,25 +62,29 @@ class PostsController < ApplicationController
 			@user = User.find_by(id: params[:user_id])
 			post_id = params[:id]
 			@post = @user.posts.find_by(id: post_id)
+			@categories = Category.all
 		
 	end
 
 	def update
 
-		post_id = params[:id]
+		obj = JSON.parse(params[:data_value])
+
+		categories = obj['categories']
+		categories_obj = categories.map {|category| Category.find_by(name: category)}
+		title = obj['post']['title']
+		content = obj['post']['content']
+		post_id = obj['post']['post_id']
 		
-		@user = User.find_by(id: params[:user_id])
+		@user = User.find_by(id: obj['post']['user_id'])
 
 
 		if current_user.id == @user.id || find_match_request_editor_accepted(post_id, current_user)
 			@post = @user.posts.find_by(id: post_id)
 
-			if @post.update(post_params)
-				redirect_to user_post_path(@user.id, @post.id)
-			else
-				flash[:error] = "The post could not be updated"
-				redirect_to edit_post_path
-			end
+			@post.update(title: title, content: content)
+			render json: "", status: 200
+
 		else
 			@post = @user.posts.find_by(id: post_id)
 			flash[:notice] = "Your are not allowed to edit this post"
@@ -98,6 +107,11 @@ class PostsController < ApplicationController
 
 
 	private
+
+	def redirect
+		redirect_to users_path
+		
+	end
 
 	def post_params
 		params.require(:post).permit(:title, :content)		

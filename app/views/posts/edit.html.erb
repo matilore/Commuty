@@ -1,9 +1,30 @@
+<script type="text/javascript">
+	var user_id = <%= raw @user.id %>;
+	var post_id = <%= raw @post.id %>
+</script>
+<div class="row">
+<div class="col-md-10">
+<div class='alert'></div>
 <h1>Editing: "<%=@post.title%>"</h1>
 
 <%= render 'form' %>
+<form>
+<input type='hidden' name='_method' value='patch'>
+<button type="button" class="btn-update-post"><a href="/users/<%=@user.id%>/posts/<%=@post.id%>">Save Post</a></button>
+</form>
+<br>
 <br>
 
 <% if flash[:error]%>
 <%= flash[:error]%>
 <% end%>
+</div>
 
+<div style = 'margin-left: 10px;' class="col-md-12 categories text-center">
+	<% @categories.each do |category| %>
+
+	<%= button_tag(category.name, data: {add: category.name}, :class=> 'btn-category not-added')%>
+<% end %>
+
+</div>
+</div>

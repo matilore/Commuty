@@ -4,6 +4,7 @@ class Post < ActiveRecord::Base
 	
 	belongs_to :user
 	has_many :requests
+	has_and_belongs_to_many :categories
 
 	def self.find_post_from_revision(revision)
 		find_by(id: Request.find_by(id: revision.request_id).post_id)

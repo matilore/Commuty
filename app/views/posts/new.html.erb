@@ -1,9 +1,26 @@
-<h1>New post</h1>
+<script type="text/javascript">
+	var user_id = <%= raw @user.id %>;
+</script>
 
-<%= render 'form' %>
-<br>
+<div class="row">
+<div class="col-md-10">
+<div class='alert'></div>
+	<h1>New post</h1>
 
-<% if flash[:error]%>
-<%= flash[:error]%>
+	<%= render 'form' %>
+	<button type="button" class="btn-send-post"><a href="/users/<%=@user.id%>" >Save Post</a></button>
+	<br>
+
+	<% if flash[:error]%>
+	<%= flash[:error]%>
+	<% end %>
+</div>
+
+<div class="col-md-10 categories">
+	<% @categories.each do |category| %>
+
+	<%= button_tag(category.name, data: {add: category.name}, :class=> 'btn-category not-added')%>
 <% end %>
 
+</div>
+</div>

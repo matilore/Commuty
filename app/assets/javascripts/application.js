@@ -115,6 +115,100 @@ function createParClass() {
 		console.log("there has been an  error " + error);
 	}
 
+	
+	var categories = [];
+
+	function add_categories() {
+
+
+		$('.btn-category').click(function() {
+
+			category_name = $(this).data("add");
+			if ($(this).hasClass('not-added')) {				
+				categories.push(category_name);
+				$(this).toggleClass('not-added');
+				$(this).toggleClass('btn-color-blue');
+			} else {
+				var index = categories.indexOf(category_name);
+				categories.splice(index, 1);
+				$(this).toggleClass('not-added');
+				$(this).toggleClass('btn-color-blue');
+			}
+			console.log(categories);
+		});
+
+	}
+
+
+
+
+	function sendCategories() {
+
+		$('.btn-send-post').click(function(event){
+
+			var title = $('.title-field').val();
+			var content = $('.content-field').val();
+
+			if (title != "" && content != "") {
+			var obj = {
+				categories: categories,
+				post : {
+					title: title,
+					content: content,
+					user_id: user_id
+				}
+			}
+
+			$.ajax({
+				url : '/users/' + user_id + '/posts',
+				type : 'POST',
+				dataType: 'json',
+				data : {data_value: JSON.stringify(obj)},
+				
+			});
+		} else {// en of title and content complete
+			event.preventDefault();
+			var alert = $('<div class="alert alert-success alert-dismissible text-center" role="alert"></button>The post could not been saved</div>');
+			$('.col-md-10 .alert').append(alert);
+		}
+		})
+	}
+
+	function sendCategoriesUpdate() {
+
+		$('.btn-update-post').click(function(event){
+
+			var title = $('.title-field').val();
+			var content = $('.content-field').val();
+
+			if (title != "" && content != "") {
+			var obj = {
+				categories: categories,
+				post : {
+					title: title,
+					content: content,
+					user_id: user_id,
+					post_id: post_id
+				}
+			}
+
+			$.ajax({
+				url : '/users/' + user_id + '/posts/' + post_id,
+				type : 'PUT',
+				dataType: 'json',
+				data : {data_value: JSON.stringify(obj)},
+				
+			});
+		} else {// en of title and content complete
+			event.preventDefault();
+			var alert = $('<div class="alert alert-success alert-dismissible text-center" role="alert"></button>The post could not been saved</div>');
+			$('.col-md-10 .alert').append(alert);
+		}
+		})
+	}
+	
+
+
 $(document).ready(function(){
 	$('.diffs-btn').click(function() {
 		var modal = $('.diffs-modal').modal('show');
@@ -125,5 +219,7 @@ $(document).ready(function(){
 	writeComments();
 	commentMode();
 	createPopups();
-	
+	add_categories()
+	sendCategories();
+	sendCategoriesUpdate();
 });

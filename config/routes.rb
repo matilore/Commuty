@@ -8,7 +8,8 @@ Rails.application.routes.draw do
 	resources :revisions
 	resources :comments, except: [:new, :edit, :show]
 
-	get '/home' => "posts#home"
-	get "/comments/:post_id" => "comments#show_per_post"
 	get "/" => "sites#index"
+	get "/comments/:post_id" => "comments#show_per_post"
+	#get 'categories' => 
+	post "/categories/" => "posts#categories"
 end

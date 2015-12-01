@@ -30,11 +30,11 @@ body {
 */
 
 .title-field {
-	width: 1000px;
+	width: 1200px;
 }
 
 .content-field {
-	width: 1000px;
+	width: 1200px;
 	height: 300px;
 }
 
@@ -87,4 +87,8 @@ div.comment {
 	border-radius: 5px;
 	background-color: #FFFFFF;
 	-webkit-animation: pulse 5s infinite alternate;
+}
+
+.btn-color-blue {
+	color:#004CFF;
 }
