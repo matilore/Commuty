@@ -28,8 +28,7 @@ module ApplicationHelper
   	def show_if_you_request_for_this_post(post_id, current_user)
   		pending_request = Request.editor_pending?(post_id, current_user)
   		if pending_request && pending_request.size == 1
-  			("<p class= 'pull-right' style = 'margin-top: -18px;'>
-  				<em>You have already request to revision this text</em> <span class='glyphicon glyphicon-question-sign'>
+  			("<p><em>You have already request to revision this text</em> <span class='glyphicon glyphicon-question-sign'>
   				</span></p>").html_safe
   		end
   	end
@@ -42,8 +41,7 @@ module ApplicationHelper
   		if accepted_request && accepted_request.revision
   			
   			if accepted_request.revision.written == true
-  				("<p class= 'pull-right' style = 'margin-top: -18px;'>
-  				<em>You have already written a revision for this text </em><span class='glyphicon glyphicon-check'>
+  				("<p><em>You have already written a revision for this text </em><span class='glyphicon glyphicon-check'>
   				</span></p>").html_safe
   			end
   		end

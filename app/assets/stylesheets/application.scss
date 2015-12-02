@@ -140,9 +140,29 @@ body.sites-index {
 }
 
 .description-post {
-	height: 200px;
+	height: 230px;
+}
+
+.thumbnail {
+	margin: 5px;
 }
 
 .thumbnail:hover {
-	width: 105%;
+
+	border: 4px solid;
+
+}
+
+.tab-pane .posts {
+	border-bottom: 1px solid #C0BEBF;
+}
+
+.nav-user {
+	margin-top: 100px;
+}
+
+.requests-notices {
+	margin-top: 150px;
+	margin-right: -100px;
+	margin-left: 60px;
 }

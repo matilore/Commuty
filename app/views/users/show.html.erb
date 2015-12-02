@@ -1,54 +1,127 @@
 <div class="row">
-<div class="col-md-8">
-<h1>Hi <%=@user.username%>!</h1>
-<div class="buttons-white-font">
-	<button class="btn btn-primary"><%= link_to("Click here to see your posts", user_posts_path(@user.id) )%></button>
-</div>
-</div>
 
-<!--In the same div of posts button-->
-<div class="revisions">
+	<div class="col-md-8">
+	<h1>Hi <%=@user.username%>!</h1>
 	
+		<ul class="nav nav-tabs nav-user">
+		  <li class="active"><a data-toggle="tab" href="#myPosts">My Posts</a></li>
+		  <li><a data-toggle="tab" href="#myRevisions">My revisions</a></li>
+		  <li><a data-toggle="tab" href="#revisionsAboutMyPosts">Revisions about my Posts</a></li>
+		  <li><a data-toggle="tab" href="#myRequests">My Requests</a></li>
+		  <li><a data-toggle="tab" href="#receivedRequests">Received Requests</a></li>
 
-</div>
+		</ul>
 
-<div class="col-md-4">
+		<div class="tab-content">
 
-<% if @number_pending_requests > 0 %>
-<div class="alert alert-danger col-md-10" role="alert"><strong>The number of pending requests is <%= @number_pending_requests%></strong></div>
+		  <div id="myPosts" class="tab-pane fade in active">
+		    <h3>My Recent Posts</h3>
+		    <% @posts.each do |post|%>
+		    		<div class="posts">
+					<h4><%= link_to(post.title, user_post_path(current_user.id, post.id)) %></h4>
+					<p>written on <%= link_to(post.created_at.strftime('%d %B %Y')) %></p>
+					<p style="display:inline-block;"><%= revisions_per_post(post) if revisions_per_post(post) != false %></p>
+					</div>
+				<% end%>
+				<br>
+				<br>
 
-<br>
-<br>
-<br>
-<br>
+				<div class="buttons-white-font">
+					<button class="btn btn-primary"><%= link_to("Click here to see all your posts", user_posts_path(@user.id) )%></button>
+				</div>
+		  </div>
 
 
-	<%@user_requests.each do |request| %>
 
-		<% if request.status_request == false %>
-			<p style="display:inline">Request from <strong><%= User.show_username_by_request(request.editor_id)%></strong></p>
-			<p> to edit <%= Post.find_by(id: request.post_id).title%></p>
-			
+		<div id="myRevisions" class="tab-pane fade">
+			    <h3>My Revisions</h3>
+			    <div>
+			    <%if @revisions != nil%>
+					<% @revisions.each do  |revision|%>
+						<h4><%= link_to(revision.title, revision_path(revision.id)) %></h4>
+						<% end %>
+						<% else %>
+						<p>There are no revisions</p>
+						<% end %>
+				</div>
+		</div>
 
-			<%= form_for request, method: :patch do |f| %>
-				<%= f.hidden_field :id, :value => request.id %>
-				<%= f.submit "Accept", :class => 'btn btn-success pull-left col-md-5' %>
+		  
+		<div id="revisionsAboutMyPosts" class="tab-pane fade">
+		    <h3>Revisions of my posts</h3>
+		    <%if @revisions_my_posts != nil%>
+				<% @revisions_my_posts.each do  |revision|%>
+					<h4><%= link_to(revision.title, revision_path(revision.id)) %></h4>
+					<% end %>
+			<% else %>
+					<p>There are no revisions</p>
 			<% end %>
-			
-			<%= form_for request, method: :delete do |f| %>
-				<%= f.hidden_field :id, :value => request.id %>
-				<%= f.submit "Reject", :class => 'btn btn-danger pull-left col-md-5' %>
+		</div>
+
+
+
+		<div id="myRequests" class="tab-pane fade">
+		    <h3>My requests</h3>
+		    <%if @my_pending_requests != nil%>
+				<% @my_pending_requests.each do  |request|%>
+				<%post = Post.find_by(id: request.post_id)%>
+					<h4><%= link_to(post.title, user_post_path(post.user_id, post.id)) %></h4>
+					<p>written by <%=User.find_by(id: post.user_id).username%></p>
+					<% end %>
+			<% else %>
+					<p>There are no requests</p>
 			<% end %>
-			<br>
-			<br>
+		    <%binding.pry%>
+		</div>
+
+		</div>
+		</div>
+
+
+
+
+		<!--In the same div of posts button-->
+		<div class="col-md-3">
+		<div class="requests-notices">
+		
+
+		<% if @number_pending_requests > 0 %>
+		<div class="alert alert-danger col-md-12" role="alert"><strong>The number of pending requests is <%= @number_pending_requests%></strong></div>
+
+
+		<%@user_requests.each do |request| %>
+		<%post = Post.find_by(id: request.post_id)%>
+
+		
+
+			<% if request.status_request == false %>
+			<div class="col-md-10">
+				<p style="display:inline">Request from <strong><%= User.show_username_by_request(request.editor_id)%></strong></p>
+				<p> to edit <%= link_to(post.title, user_post_path(post.user_id, post.id) )%></p>
+				</div>
+				
+
+				<%= form_for request, method: :patch do |f| %>
+					<%= f.hidden_field :id, :value => request.id %>
+					<%= f.submit "Accept", :class => 'btn btn-success pull-left col-md-6' %>
+				<% end %>
+				
+				<%= form_for request, method: :delete do |f| %>
+					<%= f.hidden_field :id, :value => request.id %>
+					<%= f.submit "Reject", :class => 'btn btn-danger pull-left col-md-6' %>
+				<% end %>
+				<br>
+				<br>
+				<% end %>
 			<% end %>
+		
 		<% end %>
-	
-<% end %>
 
-<% if @number_pending_requests == 0 %>
-<div class="alert alert-success col-md-10" role="alert"><strong>You have no requests</strong></div>
-<% end %>
 
-</div>
+		<% if @number_pending_requests == 0 %>
+		<div class="alert alert-success col-md-12" role="alert"><strong>You have no requests</strong></div>
+		<% end %>
+
+		</div>
+	</div>
 </div>

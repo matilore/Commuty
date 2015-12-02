@@ -36,9 +36,9 @@
 				<div style= "display:block;" class="col-xs-6 col-md-4 thumb">
 
 				  	<div class="col-md-12 description-post">				    
-						<h4><%= link_to(post.title, user_post_path(post.user_id, post.id)) %></h4>
-						<%=show_req_rev_status(post.id, current_user) if current_user%>			
-						written by <%= link_to(User.find_by(id: post.user_id).username, user_posts_path(post.user_id))%></p>
+						<h4><%= link_to(post.title, user_post_path(post.user_id, post.id))%></h4>
+						<p><%=show_req_rev_status(post.id, current_user) if current_user%></p>		
+						<p>written by <%= link_to(User.find_by(id: post.user_id).username, user_posts_path(post.user_id))%></p>
 						<p> created at <%= post.created_at.strftime('%d %B %Y') %></p>
 						<p><%=show_text_preview(post.content)%></p>
 	 				</div>
