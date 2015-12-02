@@ -29,6 +29,10 @@ body {
 }
 */
 
+body {
+		font-family: 'Exo 2', sans-serif;
+}
+
 .title-field {
 	width: 1200px;
 }
@@ -89,6 +93,56 @@ div.comment {
 	-webkit-animation: pulse 5s infinite alternate;
 }
 
+.btn-send-post a, .btn-udpate-post a {
+	text-decoration:none;
+}
+
+.btn-category {
+	background-color:white;
+}
+
 .btn-color-blue {
 	color:#004CFF;
+}
+
+body.sites-index {
+	background: image-url('background.jpg');
+	background-size: 100%;
+	background-repeat: no-repeat;
+	color: #22303A;
+}
+
+body.sites-index {
+	background-color:#C0BEBF;
+}
+
+.sites-index .row > h1:first-of-type {
+	margin-top: 0.5em;
+	font-size: 12em;
+	
+	font-family: 'Exo 2', sans-serif;
+	text-align:center;
+}
+
+.sites-index .row > h2 {
+	margin-bottom: 1em;
+	font-size: 8em;
+	text-align:center;
+}
+
+.btns {
+	margin-top:10em;
+}
+
+.btns button {
+	width: 150px;
+	font-size: 1.2em;
+}
+
+.description-post {
+	height: 200px;
+}
+
+.thumbnail:hover {
+	width: 105%;
 }

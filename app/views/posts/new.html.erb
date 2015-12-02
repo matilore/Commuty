@@ -8,7 +8,8 @@
 	<h1>New post</h1>
 
 	<%= render 'form' %>
-	<button type="button" class="btn-send-post"><a href="/users/<%=@user.id%>" >Save Post</a></button>
+	<button type="button" class="btn btn-default btn-send-post"><a href="/users/<%=@user.id%>" >Save Post</a></button>
+	<br>
 	<br>
 
 	<% if flash[:error]%>
@@ -16,7 +17,8 @@
 	<% end %>
 </div>
 
-<div class="col-md-10 categories">
+
+<div style = 'margin-left: 10px;' class="col-md-12 categories text-center">
 	<% @categories.each do |category| %>
 
 	<%= button_tag(category.name, data: {add: category.name}, :class=> 'btn-category not-added')%>

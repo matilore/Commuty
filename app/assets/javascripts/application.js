@@ -207,13 +207,21 @@ function createParClass() {
 		})
 	}
 	
+	function removeClassesFromIndex() {
+		$($('body.sites-index').find('nav')).remove();
+	}
 
+
+
+	//LUNCH A MODAL AFTER 10 SECONDS IN THE MAIN PAGE TO MAKE THE USE VISIT THE SECTION BELOW
 
 $(document).ready(function(){
+
 	$('.diffs-btn').click(function() {
 		var modal = $('.diffs-modal').modal('show');
 	});
 
+	removeClassesFromIndex();
 	createParClass();
 	showComments();
 	writeComments();
@@ -222,4 +230,5 @@ $(document).ready(function(){
 	add_categories()
 	sendCategories();
 	sendCategoriesUpdate();
+
 });

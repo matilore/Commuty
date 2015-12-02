@@ -2,11 +2,12 @@
 <html>
 	<head>
 	  <title>Commuty</title>
+	  <link href='https://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet' type='text/css'>
 	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
 	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 	  <%= csrf_meta_tags %>
 	</head>
-<body>
+<body class="<%= params[:controller] %>-<%= params[:action] %>">
 
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">

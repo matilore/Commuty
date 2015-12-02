@@ -10,6 +10,5 @@ Rails.application.routes.draw do
 
 	get "/" => "sites#index"
 	get "/comments/:post_id" => "comments#show_per_post"
-	#get 'categories' => 
 	post "/categories/" => "posts#categories"
 end
