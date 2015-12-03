@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'bootstrap-sass'
 
-gem 'tinymce-rails'
+gem 'paperclip'
 
 gem 'diffy'
 

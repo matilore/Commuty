@@ -6,9 +6,10 @@
 		<ul class="nav nav-tabs nav-user">
 		  <li class="active"><a data-toggle="tab" href="#myPosts">My Posts</a></li>
 		  <li><a data-toggle="tab" href="#myRevisions">My revisions</a></li>
-		  <li><a data-toggle="tab" href="#revisionsAboutMyPosts">Revisions about my Posts</a></li>
+		  <li><a data-toggle="tab" href="#revisionsAboutMyPosts">Revisions of my Posts</a></li>
 		  <li><a data-toggle="tab" href="#myRequests">My Requests</a></li>
 		  <li><a data-toggle="tab" href="#receivedRequests">Received Requests</a></li>
+		  <li><a data-toggle="tab" href="#editProfile">Edit Profile</a></li>
 
 		</ul>
 
@@ -71,7 +72,19 @@
 			<% else %>
 					<p>There are no requests</p>
 			<% end %>
-		    <%binding.pry%>
+		</div>
+
+		<div id="editProfile" class="tab-pane fade">
+		    <h3>My Profile</h3>
+		    <div>
+		    	<% if current_user.avatar.file? %>
+			    <%= image_tag(current_user.avatar.url(:thumb)) %>
+			    <% end %>
+		    </div>
+		     <a href="/users/edit"><button>Edit Profile</button></a>
+
+
+		    	
 		</div>
 
 		</div>

@@ -17,6 +17,7 @@ class UsersController < ApplicationController
 			@revisions_my_posts = show_user_posts_revisions
 			@my_pending_requests = show_user_pending_requests
 			#@my_accepted_requests = show_user_accepted_requests
+			@new_user = User.new
 			
 		else
 			flash[:notice] = "You are logged in but you tried to access restricted content"
@@ -49,7 +50,6 @@ class UsersController < ApplicationController
 
 	def show_user_pending_requests
 		my_pending_requests = Request.where("editor_id = ? AND status_request = ?", current_user.id, false)
-		binding.pry
 		if my_pending_requests.empty? == false
 			my_pending_requests
 		else

@@ -208,7 +208,11 @@ function createParClass() {
 	}
 	
 	function removeClassesFromIndex() {
-		$($('body.sites-index').find('nav')).remove();
+		if (userLogged == false) {
+			$($('body.sites-index').find('nav')).remove();			
+		} else {
+			$($('body.sites-index').find('.btns button').not('.see-posts')).remove();
+		}
 	}
 
 
