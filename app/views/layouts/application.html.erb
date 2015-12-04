@@ -10,36 +10,37 @@
 <body class="<%= params[:controller] %>-<%= params[:action] %>">
 
 	<nav class="navbar navbar-default">
-	  <div class="container-fluid">
-	    <!-- Brand and toggle get grouped for better mobile display -->
-	    <div class="navbar-header">
-	      <a class="navbar-brand" href= "/">Home</a>
+		<div class="container-fluid">
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+	    	<a class="navbar-brand" href= "/">Home</a>
 	    </div>
 
-	    <!-- Collect the nav links, forms, and other content for toggling -->
+
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	      
-	      <form class="navbar-form navbar-left" role="search">
-	        <div class="form-group">
-	          <input type="text" class="form-control" placeholder="Search">
-	        </div>
-	        <button type="submit" class="btn btn-default">Submit</button>
-	      </form>
-	      <ul class="nav navbar-nav navbar-right">
-	      <%if !user_signed_in? %>
-	        <li><%= link_to("Sign up", new_user_registration_path)%></li>
-	        <li><%= link_to("Sign in", new_user_session_path)%></li>
-	      <% else %>
-	      <li><a href=''>requests <span class="badge"><%=notifies_pending_request_to_answer.to_s%></span></a></li>
-	      <li><a href=''>revisions <span class="badge"><%=notifies_revisions_of_own_post.to_s%></span></a></li>	      
-	      <li><a href=<%= user_path(current_user.id)%>><strong><%= current_user.username%></strong></a></li>
-	        <li><%=link_to("Log out", destroy_user_session_path, :method => :delete)%></li>
-	        <li><%= link_to("Create a new post", new_user_post_path(current_user.id))%></li>
-	      <% end %>
-	      </ul>
-	    </div><!-- /.navbar-collapse -->
-	  </div><!-- /.container-fluid -->
-	</nav>
+
+		    <%= form_tag(search_path, :method => "get", class: "navbar-form navbar-left") do %>
+			<%= text_field_tag :search, params[:search], placeholder: "title, content or category", class: "form-control" %>
+			<%= submit_tag "Search", class: "btn btn-default" %>
+			<% end %>
+		      
+		    <ul class="nav navbar-nav navbar-right">
+			  	<% if !user_signed_in? %>
+			       	<li><%= link_to("Sign up", new_user_registration_path)%></li>
+			       	<li><%= link_to("Sign in", new_user_session_path)%></li>
+			   	<% else %>
+			   		<li><a href=''>requests <span class="badge"><%=notifies_pending_request_to_answer.to_s %></span></a></li>
+			   		<li><a href=''>revisions <span class="badge"><%=notifies_revisions_of_own_post.to_s %></span></a></li>	      
+			   		<li><a href=<%= user_path(current_user.id)%>>
+			   		<%= image_tag(current_user.avatar.url(:small)) if current_user.avatar.file? %>
+			   		<strong><%= current_user.username%></strong></a></li>
+			       	<li><%=link_to("Log out", destroy_user_session_path, :method => :delete)%></li>
+			       	<li><%= link_to("Create a new post", new_user_post_path(current_user.id))%></li>
+			   	<% end %>
+		    </ul>
+		</div>
+	  </div>
+	  </nav>
 
 	<div class="row">
 	<div class= "col-md-10 col-md-offset-1">
@@ -62,7 +63,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+	</div>
 
 </body>
 </html>

@@ -61,4 +61,12 @@ class RevisionsController < ApplicationController
 		
 	end
 
+	def read_status
+		read_status = params[:revision][:read]
+		revision_id = params[:id]
+		revision = Revision.find_by(id: revision_id)
+		revision.update(read: read_status)
+		redirect_to revision_path(revision.id)
+	end
+
 end

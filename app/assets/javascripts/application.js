@@ -103,10 +103,11 @@ function createParClass() {
 
 
 	function retrieveData(data) {
+		console.log(data);
 		var commentList = $('.comment ul');
 		for (var i = 0; i < data.length; i++) {
 			if (data[i].paragraph_id == pId) {
-				$($('<li>').addClass('list-group-item col-md-10 ' + pId).text('written by ' + data[i].username + ' ' + data[i].content)).appendTo(commentList);
+				$($('<li>').addClass('list-group-item col-md-10 ' + pId).html('<p>written by <strong>' + data[i].username +  '</strong></p>' + data[i].content)).appendTo(commentList);
 			};
 		}
 	}
@@ -206,14 +207,6 @@ function createParClass() {
 		}
 		})
 	}
-	
-	function removeClassesFromIndex() {
-		if (userLogged == false) {
-			$($('body.sites-index').find('nav')).remove();			
-		} else {
-			$($('body.sites-index').find('.btns button').not('.see-posts')).remove();
-		}
-	}
 
 
 
@@ -225,7 +218,6 @@ $(document).ready(function(){
 		var modal = $('.diffs-modal').modal('show');
 	});
 
-	removeClassesFromIndex();
 	createParClass();
 	showComments();
 	writeComments();

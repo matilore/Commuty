@@ -166,3 +166,12 @@ body.sites-index {
 	margin-right: -100px;
 	margin-left: 60px;
 }
+
+#myRequests li {
+	list-style:none;
+	border-bottom: 1px solid #C0BEBF;
+}
+
+#myRequests div.accepted-req {
+	margin-top: 20px;
+}

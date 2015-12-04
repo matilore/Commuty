@@ -11,19 +11,20 @@ puts 'launching seeds'
 Request.destroy_all
 Revision.destroy_all
 Post.destroy_all
+Category.destroy_all
 
 puts 'Posts, Requests and Revisions destroyed'
 
 puts 'populating seeds'
 
 User.all.each do |user|
-	10.times do |i|
+	2.times do |i|
 		user.posts.create(title: Faker::Lorem.word, content: Faker::Lorem.paragraph)
 	end
 end
 
 Post.all.each do |post|
 	5.times do |i|
-	Category.create(name: Faker::Commerce.department(1))
+	post.categories.create(name: Faker::Commerce.department(1))
 	end
 end

@@ -1,27 +1,26 @@
 <div class="col-md-8">
 
 	<div class="page-header">
-	  <h1>These are all <strong><%= @user.username%></strong> posts</h1></h1>
+	  <h1>These are all <strong><%= @user.username%></strong> posts</h1>
 	</div>
 	
 	<div>
 		<% @posts.each do |post| %>
 
-			<div class="panel panel-success">
-			  <div class="panel-heading">
-			    <h3 class="panel-title"><%= link_to(post.title, user_post_path(@user.id, post.id)) %></h3>
-			  </div>
-			  <div class="panel-body">
-				<p><%= post.created_at.strftime('%d %B %Y') %></p> 
-					<div class="preview">
-					<%#inserire previre testo%>
-					<%= show_text_preview(post.content)%>
-				 	</div>
-			</div>
-			</div>
+			<div class="panel panel-default">
+				  <div class="panel-heading">
+				    <h3 class="panel-title"><%= link_to(post.title, user_post_path(@user.id, post.id)) %></h3>
+				</div>
+					<div class="panel-body">
+					<p><%= post.created_at.strftime('%d %B %Y') %></p> 
+						<div class="preview">
+							<%= show_text_preview(post.content) %>
+							</div>
+				</div>
 
 
 
 		<% end %>
+	</div>
 	</div>
 </div>

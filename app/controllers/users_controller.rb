@@ -12,11 +12,11 @@ class UsersController < ApplicationController
 			@user = User.find_by(id: params[:id])
 			@number_pending_requests = Request.show_number_pending_requests(@user.id)
 			@user_requests = Request.show_author_requests(@user.id)
-			@posts = Post.where(user_id: @user.id)
+			@posts = Post.where(user_id: @user.id).order(created_at: :desc)
 			@revisions = show_user_revision
 			@revisions_my_posts = show_user_posts_revisions
 			@my_pending_requests = show_user_pending_requests
-			#@my_accepted_requests = show_user_accepted_requests
+			@my_accepted_requests = show_user_accepted_requests
 			@new_user = User.new
 			
 		else
@@ -57,14 +57,14 @@ class UsersController < ApplicationController
 		end
 	end
 
-	# def show_user_accepted_requests
-	# 	my_accepted_requests = Request.where("editor_id = ? AND status_request = ?", current_user.id, true)
-	# 	if my_accepted_requests.empty? != true
-	# 		my_accepted_requests
-	# 	else
-	# 		nil
-	# 	end
-	# end
+	def show_user_accepted_requests
+		my_accepted_requests = Request.where("editor_id = ? AND status_request = ?", current_user.id, true)
+		if my_accepted_requests.empty? == false
+			my_accepted_requests
+		else
+			nil
+		end
+	end
 
 
 end

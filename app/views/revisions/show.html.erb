@@ -27,12 +27,24 @@
 	<br>
 	</div>
 	<% end %>
-	
-	<button class="btn btn-warning col-md-5 diffs-btn">Check the diffs with the original post</button>
 
 	
-	<button class="btn btn-primary col-md-5 diffs-btn">Check this revision as read</button>
 	
+		<div>
+			<button class="btn btn-warning col-md-5 diffs-btn">Check the diffs with the original post</button>
+		</div>
+		<br>
+		<br>
+
+		<% if current_user.id == author_original_post_of_revision(@revision)%>
+		<div>
+			<%=form_for @revision, url: approve_path(@revision.id), method:'PATCH' do |f|%>
+				<%= f.hidden_field :read, :value=> true %>
+				<%= f.submit "Check this revision as read", :class =>"btn btn-primary col-md-5 diffs-btn"%>
+			<% end %>
+		</div>
+	<% end %>
+
 <% end %>
 </div>
 
@@ -40,7 +52,7 @@
 	
 </div>
 
-<!-- Pokemon modal view (hidden at first) -->
+<!-- modal -->
 <div class="modal fade diffs-modal">
   <div class="modal-dialog">
     <div class="modal-content">

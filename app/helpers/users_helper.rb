@@ -10,4 +10,12 @@ module UsersHelper
 	end
 	end
 
+
+	def show_number_of_revisions_as_editor()
+		requests = Request.where('editor_id =? AND status_request =?', current_user.id, true)
+		revisions = requests.map {|request| Revision.where('request_id =? AND written =?', request.id, true)} 
+		revisions = revisions.reject {|revision| revision.empty?}
+		revisions.size		
+	end
+
 end

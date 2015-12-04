@@ -5,6 +5,15 @@
 		} else {
 			userLogged = false;
 	}
+
+	function removeClassesFromIndex() {
+		if (userLogged == false) {
+			$($('body.sites-index').find('nav')).remove();			
+		} else {
+			$($('body.sites-index').find('.btns button').not('.see-posts')).remove();
+		}
+	}
+	removeClassesFromIndex();
 </script>
 
 <h1>Commuty</h1>

@@ -17,7 +17,7 @@ module ApplicationHelper
   		posts = Post.where(user_id: current_user.id)
   		revisions = posts.map do |post|
   			if Revision.where(post_id: post.id) != nil
-  				counter += Revision.where(post_id: post.id).size
+  				counter += Revision.where('post_id=? AND read=?', post.id, false).size
   			end	
   		end
   		counter
@@ -62,7 +62,7 @@ module ApplicationHelper
 
     def show_text_preview(text)
       text = text.split(' ')
-      text = text[0..80].join(' ')
+      text = text[0..40].join(' ')
       text = text + '...'
       return text
 

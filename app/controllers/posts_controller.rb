@@ -14,8 +14,6 @@ class PostsController < ApplicationController
 		@request = Request.new
 		@comment = Comment.new
 
-
-
 		if current_user
 			@if_request_accepted = find_match_request_editor_accepted(post_id, current_user) 
 			#if request exists but status = false

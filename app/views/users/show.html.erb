@@ -8,8 +8,8 @@
 		  <li><a data-toggle="tab" href="#myRevisions">My revisions</a></li>
 		  <li><a data-toggle="tab" href="#revisionsAboutMyPosts">Revisions of my Posts</a></li>
 		  <li><a data-toggle="tab" href="#myRequests">My Requests</a></li>
-		  <li><a data-toggle="tab" href="#receivedRequests">Received Requests</a></li>
-		  <li><a data-toggle="tab" href="#editProfile">Edit Profile</a></li>
+		  <!--<li><a data-toggle="tab" href="#receivedRequests">Received Requests</a></li>-->
+		  <li><a data-toggle="tab" href="#editProfile">My Profile</a></li>
 
 		</ul>
 
@@ -63,23 +63,50 @@
 
 		<div id="myRequests" class="tab-pane fade">
 		    <h3>My requests</h3>
-		    <%if @my_pending_requests != nil%>
-				<% @my_pending_requests.each do  |request|%>
-				<%post = Post.find_by(id: request.post_id)%>
-					<h4><%= link_to(post.title, user_post_path(post.user_id, post.id)) %></h4>
-					<p>written by <%=User.find_by(id: post.user_id).username%></p>
-					<% end %>
-			<% else %>
-					<p>There are no requests</p>
-			<% end %>
+
+		    <div class="pending-req">
+			    <%if @my_pending_requests != nil%>
+			    <h4>Not accepted requests</h4>
+			    <ul>
+					<% @my_pending_requests.each do  |request|%>
+					<li><%post = Post.find_by(id: request.post_id)%>
+						<h4><%= link_to(post.title, user_post_path(post.user_id, post.id)) %></h4>
+						<p>written by <%=User.find_by(id: post.user_id).username%></p></li>
+						<% end %>
+						</ul>
+				<% else %>
+						<h4 style="border-bottom: 1px solid #C0BEBF">There are no pending requests</h4>
+				<% end %>
+			</div>
+			
+			<div class="accepted-req">
+				<%if @my_accepted_requests != nil%>
+					<h4>Accepted requests</h4>
+					<ul>
+					<% @my_accepted_requests.each do  |request|%>
+					<li><%post = Post.find_by(id: request.post_id)%>
+						<h4><%= link_to(post.title, user_post_path(post.user_id, post.id)) %></h4>
+						<p>written by <%=User.find_by(id: post.user_id).username%></p></li>
+						<% end %>
+					</ul>
+				<% else %>
+						<h4>There are no accepted requests</h4>
+				<% end %>
+			</div>
 		</div>
 
 		<div id="editProfile" class="tab-pane fade">
-		    <h3>My Profile</h3>
+		    <h3>Profile</h3>
 		    <div>
 		    	<% if current_user.avatar.file? %>
 			    <%= image_tag(current_user.avatar.url(:thumb)) %>
 			    <% end %>
+				<div class="profile-info">
+				    <p><strong>username</strong>: <%=current_user.username%></p>
+				    <p><strong>email</strong>: <%=current_user.email%></p>
+				    <p><strong>number of posts made</strong>: <%=Post.where(user_id: current_user.id).size%></p>
+				    <p><strong>number of revisions made</strong>: <%= show_number_of_revisions_as_editor() %></p>
+				</div>
 		    </div>
 		     <a href="/users/edit"><button>Edit Profile</button></a>
 
